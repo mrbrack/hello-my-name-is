@@ -161,13 +161,14 @@ export default function SketchBlock() {
 
       // Displays positions pushed into the master array and is representative of the drawing state for an entire session
       for (let i = 0; i < positions.length; i++) {
-        for (let j = 0; j < positions[i].length; j++) {
-          p5.fill(positions[i][j].colour);
-          p5.strokeWeight(positions[i][j].strokeSize);
-          p5.ellipse(
+        for (let j = 1; j < positions[i].length; j++) {
+          p5.strokeWeight(positions[i][j - 1].brushSize);
+          p5.stroke(positions[i][j - 1].colour);
+          p5.line(
+            positions[i][j - 1].x,
+            positions[i][j - 1].y,
             positions[i][j].x,
-            positions[i][j].y,
-            positions[i][j].brushSize
+            positions[i][j].y
           );
         }
       }
@@ -181,7 +182,7 @@ export default function SketchBlock() {
 
       // UPDATED: Provides feedback for the user whilst drawing so that they can see their decisions in real time
       for (let i = 1; i < temp.length; i++) {
-        p5.strokeWeight(10);
+        p5.strokeWeight(temp[i].brushSize);
         p5.stroke(temp[i].colour);
         p5.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
       }
