@@ -68,7 +68,7 @@ export default function SketchBlock() {
         .parent(canvasParentRef)
     );
 
-    p5.frameRate(20);
+    p5.frameRate(60);
   };
 
   // Standard p5.js preload function
