@@ -172,11 +172,18 @@ export default function SketchBlock() {
         }
       }
 
-      // Provides feedback for the user whilst drawing so that they can see their decisions in real time
+      /* ORIGINAL: Provides feedback for the user whilst drawing so that they can see their decisions in real time
       for (let i = 0; i < temp.length; i++) {
         p5.fill(temp[i].colour);
         p5.strokeWeight(temp[i].strokeSize);
         p5.ellipse(temp[i].x, temp[i].y, temp[i].brushSize);
+      } */
+
+      // UPDATED: Provides feedback for the user whilst drawing so that they can see their decisions in real time
+      for (let i = 1; i < temp.length; i++) {
+        p5.strokeWeight(10);
+        p5.stroke(temp[i].colour);
+        p5.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
       }
     }
   };
