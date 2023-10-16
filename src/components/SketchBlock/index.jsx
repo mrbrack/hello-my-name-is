@@ -2,6 +2,7 @@ import React, { useState, useLayoutEffect } from "react";
 import dynamic from "next/dynamic";
 import { Nav } from "@/components";
 let osb;
+let drawing;
 
 // Dynamically imports the react-p5 library on the client side (making the window property exist and accessible)
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
@@ -88,6 +89,7 @@ export default function SketchBlock() {
         p5.mouseY > 0 &&
         p5.mouseY < p5.height
       ) {
+        drawing = true;
         // Pushes co-ordinates to the temp variable
         temp.push({
           x: p5.mouseX,
@@ -97,6 +99,7 @@ export default function SketchBlock() {
           colour: elementColour,
         });
       } else {
+        drawing = false;
         // On mouse release pushes the entirity of the temp array to the master positions array
         // Sectioning out the data allows the undo and reset functionality.
         if (temp.length !== 0) {
@@ -129,10 +132,12 @@ export default function SketchBlock() {
       } */
 
       // UPDATED: Provides feedback for the user whilst drawing so that they can see their decisions in real time
-      for (let i = 1; i < temp.length; i++) {
-        osb.strokeWeight(temp[i].brushSize);
-        osb.stroke(temp[i].colour);
-        osb.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
+      if (!drawing) {
+        for (let i = 1; i < temp.length; i++) {
+          osb.strokeWeight(temp[i].brushSize);
+          osb.stroke(temp[i].colour);
+          osb.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
+        }
       }
 
       p5.image(osb, 0, 0, canvasSize.width, canvasSize.height);
