@@ -68,7 +68,7 @@ export default function SketchBlock() {
         .createCanvas(canvasSize.width, canvasSize.height)
         .parent(canvasParentRef)
     );
-    p5.frameRate(60);
+    p5.frameRate(20);
     osb = p5.createGraphics(canvasSize.width, canvasSize.height);
   };
 
