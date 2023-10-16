@@ -73,7 +73,7 @@ export default function SketchBlock() {
 
   // Standard p5.js preload function
   const preload = (p5) => {
-    setImageRef(p5.loadImage("./assets/base/hello.png"));
+    setImageRef(p5.loadImage("./assets/base/hello_new.png"));
   };
 
   // Standard p5.js draw function
