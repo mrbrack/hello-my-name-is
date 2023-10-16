@@ -132,13 +132,7 @@ export default function SketchBlock() {
      */
 
     if (navbar == false) {
-      if (
-        p5.mouseIsPressed === true &&
-        p5.mouseX > 0 &&
-        p5.mouseX < p5.width &&
-        p5.mouseY > 0 &&
-        p5.mouseY < p5.height
-      ) {
+      if (p5.mouseIsPressed === true) {
         // Pushes co-ordinates to the temp variable
         temp.push({
           x: p5.mouseX,
@@ -152,7 +146,6 @@ export default function SketchBlock() {
         // Sectioning out the data allows the undo and reset functionality.
         if (temp.length !== 0) {
           positions.push(temp);
-          console.log(positions);
           setTemp([]);
         }
       }
