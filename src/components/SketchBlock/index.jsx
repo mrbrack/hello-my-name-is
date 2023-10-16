@@ -79,14 +79,7 @@ export default function SketchBlock() {
   // Standard p5.js draw function
   const draw = (p5) => {
     p5.background(imageRef, canvasSize.width, canvasSize.height);
-
-    /*
-    *
-    * Experimental paint brush, built on work published on
-    * https://library.superhi.com/posts/how-to-paint-with-code-creating-paintbrushes
-    * 
     if (navbar == false) {
-      // SPRAY VERSION
       if (
         p5.mouseIsPressed === true &&
         p5.mouseX > 0 &&
@@ -94,45 +87,6 @@ export default function SketchBlock() {
         p5.mouseY > 0 &&
         p5.mouseY < p5.height
       ) {
-        let points = sprayPaint(p5);
-        temp.push(points);
-      } else {
-        if (temp.length !== 0) {
-          setTemp([]);
-          positions.push(temp);
-        }
-      }
-    }
-
-    for (let i = 0; i < positions.length; i++) {
-      for (let j = 0; j < positions[i].length; j++) {
-        for (let k = 0; k < positions[i][j].length; k++) {
-          p5.strokeWeight(1);
-          p5.stroke(positions[i][j][k][2]);
-          p5.point(positions[i][j][k][0], positions[i][j][k][1]);
-        }
-      }
-    }
-
-    if (temp.length !== 0) {
-      for (let i = 0; i < temp.length; i++) {
-        for (let j = 0; j < temp[i].length; j++) {
-          p5.strokeWeight(1);
-          p5.stroke(temp[i][j][2]);
-          p5.point(temp[i][j][0], temp[i][j][1]);
-        }
-      }
-    } */
-
-    /*
-     *
-     * Standard circle paint brush
-     * If the navbar isn't open the canvas is live (otherwise user movements are drawn to canvas when pressing menu buttons and inputs etc)
-     * Records user mouse co-ordinates if mouse pressed and then pushes them to the master positions array on mouse release
-     */
-
-    if (navbar == false) {
-      if (p5.mouseIsPressed === true) {
         // Pushes co-ordinates to the temp variable
         temp.push({
           x: p5.mouseX,
@@ -141,6 +95,11 @@ export default function SketchBlock() {
           strokeSize: strokeSize,
           colour: elementColour,
         });
+        for (let i = 1; i < temp.length; i++) {
+          p5.strokeWeight(temp[i].brushSize);
+          p5.stroke(temp[i].colour);
+          p5.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
+        }
       } else {
         // On mouse release pushes the entirity of the temp array to the master positions array
         // Sectioning out the data allows the undo and reset functionality.
@@ -174,11 +133,6 @@ export default function SketchBlock() {
       } */
 
       // UPDATED: Provides feedback for the user whilst drawing so that they can see their decisions in real time
-      for (let i = 1; i < temp.length; i++) {
-        p5.strokeWeight(temp[i].brushSize);
-        p5.stroke(temp[i].colour);
-        p5.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
-      }
     }
   };
 
