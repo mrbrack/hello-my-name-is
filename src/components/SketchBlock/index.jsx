@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect } from "react";
 import dynamic from "next/dynamic";
 import { Nav } from "@/components";
+let osb;
 
 // Dynamically imports the react-p5 library on the client side (making the window property exist and accessible)
 const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
@@ -67,8 +68,8 @@ export default function SketchBlock() {
         .createCanvas(canvasSize.width, canvasSize.height)
         .parent(canvasParentRef)
     );
-
     p5.frameRate(60);
+    osb = p5.createGraphics(canvasSize.width, canvasSize.height);
   };
 
   // Standard p5.js preload function
@@ -95,11 +96,6 @@ export default function SketchBlock() {
           strokeSize: strokeSize,
           colour: elementColour,
         });
-        for (let i = 1; i < temp.length; i++) {
-          p5.strokeWeight(temp[i].brushSize);
-          p5.stroke(temp[i].colour);
-          p5.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
-        }
       } else {
         // On mouse release pushes the entirity of the temp array to the master positions array
         // Sectioning out the data allows the undo and reset functionality.
@@ -111,7 +107,7 @@ export default function SketchBlock() {
 
       p5.noStroke();
 
-      // Displays positions pushed into the master array and is representative of the drawing state for an entire session
+      /* Displays positions pushed into the master array and is representative of the drawing state for an entire session
       for (let i = 0; i < positions.length; i++) {
         for (let j = 1; j < positions[i].length; j++) {
           p5.strokeWeight(positions[i][j - 1].brushSize);
@@ -123,7 +119,7 @@ export default function SketchBlock() {
             positions[i][j].y
           );
         }
-      }
+      } */
 
       /* ORIGINAL: Provides feedback for the user whilst drawing so that they can see their decisions in real time
       for (let i = 0; i < temp.length; i++) {
@@ -133,6 +129,13 @@ export default function SketchBlock() {
       } */
 
       // UPDATED: Provides feedback for the user whilst drawing so that they can see their decisions in real time
+      for (let i = 1; i < temp.length; i++) {
+        osb.strokeWeight(temp[i].brushSize);
+        osb.stroke(temp[i].colour);
+        osb.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
+      }
+
+      p5.image(osb, 0, 0, canvasSize.width, canvasSize.height);
     }
   };
 
