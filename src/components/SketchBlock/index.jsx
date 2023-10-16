@@ -95,11 +95,6 @@ export default function SketchBlock() {
           strokeSize: strokeSize,
           colour: elementColour,
         });
-        for (let i = 1; i < temp.length; i++) {
-          p5.strokeWeight(temp[i].brushSize);
-          p5.stroke(temp[i].colour);
-          p5.line(temp[i - 1].x, temp[i - 1].y, temp[i].x, temp[i].y);
-        }
       } else {
         // On mouse release pushes the entirity of the temp array to the master positions array
         // Sectioning out the data allows the undo and reset functionality.
